@@ -4,7 +4,7 @@
   "description": "This is a repository to test the website named \"Automation exersice\" using Playwright(TS).",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test example.spec"
+    "test": "npx playwright test testCases.test && npx playwright show-report"
   },
   "keywords": [],
   "author": "",
