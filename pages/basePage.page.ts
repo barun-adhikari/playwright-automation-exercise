@@ -31,13 +31,35 @@ export class BasePage {
         await this.page.locator(locator).fill(text)
     }
 
+    async selectRandomFromDropdown(locator: string) {
+        await this.page.locator(locator).click();
+        const options = this.page.locator(`${locator} option`);
+        const count = await options.count()
+
+        const validOptions: {value: string; index: number}[]=[]
+
+        for(let i= 0; i< count; i++) {
+            const value = await options.nth(i).getAttribute('value');
+            if(value){
+                validOptions.push({value, index:i})
+            }
+        }
+
+        if(validOptions.length === 0){
+            throw new Error('There are no elements in the dropdown')
+        }
+
+        const random = validOptions[Math.floor(Math.random() * validOptions.length)];
+        await this.page.selectOption(locator, { value: random.value });
+    }
+
     async waitAndClickButton(name: string): Promise<Locator> {
 		try {
 			// Wait until the loader is hidden (e.g., after a page or action load)
 			await this.page.locator('.loader-container').waitFor({ state: 'hidden' });
 
 			// Find the last button with the given name and exact match
-			const button = this.page.getByRole('button', { name, exact: true }).last();
+			const button = this.page.getByRole('button', { name, exact: true });
 			
 			// Ensure the button is visible and enabled before clicking
 			await expect(button).toBeVisible();

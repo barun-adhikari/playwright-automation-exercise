@@ -1,5 +1,6 @@
 import { Page, expect } from '@playwright/test';
 import * as locators from '../pageObjects/homePage.objects'
+import {name} from '../pageObjects/signupORLoginPage.objects'
 import BasePage from './basePage.page';
 
 class HomePage extends BasePage {
@@ -33,9 +34,19 @@ class HomePage extends BasePage {
   }
 
   async goToSignORLogin() {
-    await this.clickByText(locators.signupORloginPageLink)
+    await this.clickByText(locators.signupORloginPageLink);
     await this.isPageVisible();
   }
+
+  async goToDeleteAccount() {
+    await this.clickByText(locators.deleteAccount);
+    await this.isPageVisible();
+  }
+
+  async isUserNameVisible() {
+    await this.isTextVisible(`Logged in as ${name}`)
+  }
+
 }
 
 export default HomePage;
