@@ -6,6 +6,13 @@ class SignupORLoginPage extends BasePage {
     constructor(page : Page) {
         super(page)
     }
+    async logIn(email:string, password: string, name:string) {
+        await this.isTextVisible(locators.loginFormHeaderText);
+        await this.waitAndFill(locators.loginEmailInputField, email);
+        await this.waitAndFill(locators.loginPasswordInputField, password);
+        await this.waitAndClickButton(locators.loginButtonText);
+        await this.isTextVisible(`Logged in as ${name}`)
+    }
     async signUp() {
         await this.isTextVisible(locators.signupFormHeaderText)
         await this.waitAndFill(locators.signupNameInputField, locators.name)
@@ -38,8 +45,9 @@ class SignupORLoginPage extends BasePage {
         await this.isTextVisible(locators.successfulAccountCreatedMessage);
         await this.click(locators.continueButton);
     }
-    async accountDelete() {
+    async accountDeleteMessage() {
         await this.isTextVisible(locators.successfulAccountDeletedMessage);
+        await this.pause()
         await this.click(locators.continueButton)
     }
 }

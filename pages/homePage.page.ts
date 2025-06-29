@@ -30,7 +30,6 @@ class HomePage extends BasePage {
   async goToCart() {
     await this.clickByText(locators.cartPageLink);
     await this.isPageVisible();
-
   }
 
   async goToSignORLogin() {

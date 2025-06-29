@@ -4,12 +4,12 @@ import SignupORLoginPage from '../pages/signupORLoginPage.page'
 
 const test = fixtures.extend <{
     homePage : HomePage
-    signuporloginpage: SignupORLoginPage
+    signuporloginPage: SignupORLoginPage
 }>({
     homePage: async({page}: {page: Page}, use) => {
         await use(new HomePage(page))
     },
-    signuporloginpage: async({page}: {page: Page}, use) => {
+    signuporloginPage: async({page}: {page: Page}, use) => {
         await use(new SignupORLoginPage(page))
     }
 })
