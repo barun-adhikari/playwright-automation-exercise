@@ -40,4 +40,15 @@ test.describe("Test Case's",()=>{
       await signuporloginPage.accountDeleteMessage();
     });
   });
+  test("Test Case 3: Login User with incorrect email and password", async ({ homePage, signuporloginPage }) => {
+    await homePage.step("Launch browser, navigate to URL, and verify the home page is visible", async () => {
+      await homePage.goto();
+    });
+        await homePage.step("Click on 'Signup / Login' button", async () => {
+      await homePage.goToSignORLogin();
+    });
+        await signuporloginPage.step("passing incorrect creds.", async()=>{
+      await signuporloginPage.logIn("incorrectemail@xyz.com", "wrongpassword", 'incorrect')
+    });
+  });
 })
