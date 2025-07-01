@@ -11,7 +11,7 @@ class SignupORLoginPage extends BasePage {
         await this.waitAndFill(locators.loginEmailInputField, email);
         await this.waitAndFill(locators.loginPasswordInputField, password);
         await this.waitAndClickButton(locators.loginButtonText);
-        if(name = "incorrect") {
+        if(name === "incorrect") {
             await this.isTextVisible('Your email or password is incorrect!');
         } else{
             await this.isTextVisible(`Logged in as ${name}`);

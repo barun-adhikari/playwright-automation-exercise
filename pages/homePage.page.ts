@@ -37,6 +37,17 @@ class HomePage extends BasePage {
     await this.isPageVisible();
   }
 
+  async logoutAccount() {
+    await this.clickByText(locators.logoutAccount)
+  }
+
+  async verifylogout(){
+    await this.pause();
+    await expect(this.page).toHaveURL('https://www.automationexercise.com/')
+    await expect(this.page.locator(`text=${locators.logoutAccount}`)).not.toBeVisible();  // As we are not logged in we cannot logout account.
+    await expect(this.page.locator(`text=${locators.deleteAccount}`)).not.toBeVisible();  // As we are not logged in we cannot delete account.
+  }
+
   async goToDeleteAccount() {
     await this.clickByText(locators.deleteAccount);
     await this.isPageVisible();
