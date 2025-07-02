@@ -1,17 +1,18 @@
 import test from '../fixtures/fixture'
 
 test.describe("Test Case's",()=>{
-  test("Test Case 1: Register User", async ({ homePage, signuporloginPage }) => {
+  test.beforeEach(async ({homePage})=> {
     await homePage.step("Launch browser, navigate to URL, and verify the home page is visible", async () => {
       await homePage.goto();
     });
-
+  });
+  test("Test Case 1: Register User", async ({ homePage, signuporloginPage }) => {
     await homePage.step("Click on 'Signup / Login' button", async () => {
       await homePage.goToSignORLogin();
     });
 
     await signuporloginPage.step("Enter name and email address, then verify account creation", async () => {
-      await signuporloginPage.signUp();
+      await signuporloginPage.signUp("testuser121312@xyz.com", "test User", "valid");
       await signuporloginPage.fillSignUp();
       await signuporloginPage.accountCreatedMessage();
     });
@@ -26,8 +27,7 @@ test.describe("Test Case's",()=>{
     });
   });
   test("Test Case 2: Login User with correct email and password", async({homePage, signuporloginPage})=> {
-    await homePage.step("Launch browser, navigate to URL, and verify the home page is visible", async () => {
-      await homePage.goto();
+    await homePage.step("LNavigate to Signin / login Page", async () => {
       await homePage.goToSignORLogin();
     });
     await signuporloginPage.step("Loggin in with the correct creds.", async()=>{
@@ -41,20 +41,14 @@ test.describe("Test Case's",()=>{
     });
   });
   test("Test Case 3: Login User with incorrect email and password", async ({ homePage, signuporloginPage }) => {
-    await homePage.step("Launch browser, navigate to URL, and verify the home page is visible", async () => {
-      await homePage.goto();
-    });
     await homePage.step("Click on 'Signup / Login' button", async () => {
       await homePage.goToSignORLogin();
     });
     await signuporloginPage.step("passing incorrect creds.", async()=>{
-      await signuporloginPage.logIn("incorrectemail@xyz.com", "wrongpassword", 'incorrect')
+      await signuporloginPage.logIn("incorrectemail@xyz.com", "wrongpassword", 'invalid')
     });
   });
   test("Test Case 4: Logout User", async ({homePage, signuporloginPage}) => {
-    await homePage.step("Launch browser, navigate to URL, and verify the home page is visible", async () => {
-      await homePage.goto();
-    });
     await homePage.step("Click on 'Signup / Login' button", async () => {
       await homePage.goToSignORLogin();
     });
@@ -66,7 +60,14 @@ test.describe("Test Case's",()=>{
     }); 
     await homePage.step("Verifying the navigation to homepage", async()=> {
       await homePage.verifylogout()
-    })
-
+    });
+  });
+  test("Test Case 5: Register User with existing email", async({homePage, signuporloginPage}) => {
+    await homePage.step("Click on 'Signup / Login' button", async () => {
+      await homePage.goToSignORLogin();
+    });
+    await signuporloginPage.step("Enter already used name and email address", async () => {
+      await signuporloginPage.signUp("validuser123@xyz.com", "Valid User", "invalid");
+    });
   })
 })

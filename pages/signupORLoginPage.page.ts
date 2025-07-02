@@ -6,22 +6,25 @@ class SignupORLoginPage extends BasePage {
     constructor(page : Page) {
         super(page)
     }
-    async logIn(email:string, password: string, name:string) {
+    async logIn(email:string, password: string, scenerio:string) {
         await this.isTextVisible(locators.loginFormHeaderText);
         await this.waitAndFill(locators.loginEmailInputField, email);
         await this.waitAndFill(locators.loginPasswordInputField, password);
         await this.waitAndClickButton(locators.loginButtonText);
-        if(name === "incorrect") {
+        if(scenerio === "invalid") {
             await this.isTextVisible('Your email or password is incorrect!');
         } else{
-            await this.isTextVisible(`Logged in as ${name}`);
+            await this.isTextVisible(`Logged in as ${scenerio}`);
         }
     }
-    async signUp() {
+    async signUp(email: string, name: string, scenerio: string) {
         await this.isTextVisible(locators.signupFormHeaderText)
-        await this.waitAndFill(locators.signupNameInputField, locators.name)
-        await this.waitAndFill(locators.signupEmailInputField, locators.email)
+        await this.waitAndFill(locators.signupNameInputField, name)
+        await this.waitAndFill(locators.signupEmailInputField, email)
         await this.waitAndClickButton(locators.signupButtonText)
+        if(scenerio === "invalid"){
+            await this.isTextVisible('Email Address already exist!')
+        }
     }
     async fillSignUp() {
         await this.isTextVisible(locators.detailsFormHeader);
