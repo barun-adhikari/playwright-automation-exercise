@@ -10,7 +10,6 @@ export const signupEmailInputField: string = '[data-qa="signup-email"]';
 export const signupButtonText: string = 'Signup';
 // Test Data used for the signup
 export const name: string = 'test User';
-export const email: string = 'testuser121312@xyz.com';  // this must be unique for registration
 export const password: string = 'testuser@123'
 // Sign up form Additional locators [may be text, class or id's used]
 export const detailsFormHeader: string = 'Enter Account Information';

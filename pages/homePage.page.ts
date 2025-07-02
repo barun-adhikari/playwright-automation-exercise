@@ -43,7 +43,7 @@ class HomePage extends BasePage {
 
   async verifylogout(){
     await this.pause();
-    await expect(this.page).toHaveURL('https://www.automationexercise.com/')
+    await expect(this.page).toHaveURL('https://www.automationexercise.com/login')
     await expect(this.page.locator(`text=${locators.logoutAccount}`)).not.toBeVisible();  // As we are not logged in we cannot logout account.
     await expect(this.page.locator(`text=${locators.deleteAccount}`)).not.toBeVisible();  // As we are not logged in we cannot delete account.
   }
