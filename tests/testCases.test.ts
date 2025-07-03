@@ -70,4 +70,14 @@ test.describe("Test Case's",()=>{
       await signuporloginPage.signUp("validuser123@xyz.com", "Valid User", "invalid");
     });
   })
+  test("Test Case 6: Contact Us Form", async({homePage, contactusPage}) => {
+    await homePage.step("Click on Contact Us", async ()=> {
+      await homePage.goToContactus()
+    })
+    await contactusPage.step("Fill the Contact Form", async ()=> {
+      await contactusPage.verifyMessage();
+      await contactusPage.fillupContactForm();
+      await contactusPage.confirm()
+    })
+  })
 })

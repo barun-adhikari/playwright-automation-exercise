@@ -36,6 +36,11 @@ class HomePage extends BasePage {
     await this.clickByText(locators.signupORloginPageLink);
     await this.isPageVisible();
   }
+  
+  async goToContactus() {
+    await this.clickByText(locators.contactUsLink);
+    await this.isPageVisible();
+  }
 
   async logoutAccount() {
     await this.clickByText(locators.logoutAccount)

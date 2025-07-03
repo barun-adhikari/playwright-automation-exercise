@@ -16,7 +16,8 @@ export class BasePage {
     }
 
     async isTextVisible(text: string) {
-        await expect(this.page.getByText(text)).toBeVisible()
+        const regex = new RegExp(text, 'i');
+        await expect(this.page.getByText(regex)).toBeVisible();
     }
 
     async click(selector: string) {
