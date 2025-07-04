@@ -42,6 +42,13 @@ class HomePage extends BasePage {
     await this.isPageVisible();
   }
 
+  async goToTestCase() {
+    await this.pause()
+    await this.clickByRole('link',locators.testCaseLink, true);
+    await this.isPageVisible()
+    await this.checkUrl('test_case')
+  }
+
   async logoutAccount() {
     await this.clickByText(locators.logoutAccount)
   }

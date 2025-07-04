@@ -5,4 +5,4 @@ export const signupORloginPageLink: string = 'Signup / Login';
 export const deleteAccount: string = 'Delete Account';
 export const logoutAccount: string = 'Logout';
 export const contactUsLink: string = 'Contact us';
-
+export const testCaseLink = 'Test Cases';

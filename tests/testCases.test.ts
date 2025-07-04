@@ -80,4 +80,9 @@ test.describe("Test Case's",()=>{
       await contactusPage.confirm()
     })
   })
+  test("Test Case 7: Verify Test Cases Page", async({homePage}) => {
+    await homePage.step("Click on Test Cases Page", async ()=> {
+      await homePage.goToTestCase();
+    })
+  })
 })
