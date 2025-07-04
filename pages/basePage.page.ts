@@ -15,6 +15,11 @@ export class BasePage {
         await this.page.waitForLoadState("domcontentloaded")
     }
 
+    async checkUrl(endpoint: string) {
+        const currentUrl = this.page.url();
+        expect(currentUrl).toContain(endpoint);
+    }
+
     async isTextVisible(text: string) {
         const regex = new RegExp(text, 'i');
         await expect(this.page.getByText(regex)).toBeVisible();
@@ -22,7 +27,11 @@ export class BasePage {
 
     async click(selector: string) {
         await this.page.click(selector)
-    } 
+    }
+    
+    async clickByRole(role: Parameters<Page['getByRole']>[0], name: string, strict: boolean) {
+        await this.page.getByRole(role, { name ,  exact: strict} ).click();
+    }
 
     async clickByText(text: string) {
         await this.page.getByText(`${text}`).click()
