@@ -24,6 +24,7 @@ class HomePage extends BasePage {
   async goToProducts() {
     await this.clickByText(locators.productsPageLink);
     await this.isPageVisible();
+    await this.checkUrl('products')
 
   }
 

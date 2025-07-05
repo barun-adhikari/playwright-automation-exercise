@@ -85,4 +85,16 @@ test.describe("Test Case's",()=>{
       await homePage.goToTestCase();
     })
   })
+  test("Test Case 8: Verify All Products and product detail page", async({homePage, productsPage}) => {
+    await homePage.step("Navigation to Products Page", async()=> {
+      await homePage.goToProducts();
+    });
+    await productsPage.step("Checking the Products Page", async()=>{
+      await productsPage.verifyProductList()
+    })
+    await productsPage.step("Checking the details for the 1st product", async()=> {
+      await productsPage.checkFirstProduct()
+    })
+  });
+
 })
