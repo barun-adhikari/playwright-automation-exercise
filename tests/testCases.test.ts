@@ -96,5 +96,15 @@ test.describe("Test Case's",()=>{
       await productsPage.checkFirstProduct()
     })
   });
+  test("Test Case 9: Search Product", async({homePage, productsPage}) => {
+    await homePage.step("Navigation to Products Page", async()=> {
+      await homePage.goToProducts();
+    });
+    await productsPage.step("Searching for the product and verifying it", async()=> {
+      const searchFor: string = "top"
+      await productsPage.searchProduct(searchFor)
+      await productsPage.verifyProductList(searchFor)
+    })
 
+  });
 })
