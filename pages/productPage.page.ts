@@ -6,17 +6,27 @@ class ProductsPage extends BasePage {
   constructor(page: Page) { 
     super(page)
   }
-  async verifyProductList() {
+  async searchProduct(productName: string) {
+    await this.waitAndFill(locators.searchInputField, productName);
+    await this.click(locators.searchButton)
+    await this.isTextVisible(locators.searchProductsHeader)
+  }
+
+  async verifyProductList(searchText?:string) {
     const productCards = this.page.locator('div.productinfo.text-center');
     const count = await productCards.count();
-
+    
     console.log(`Found ${count} products.`);
-
+    
     for (let i = 0; i < count; i++) {
-        const card = productCards.nth(i);
-        await expect(card.locator('img')).toBeVisible();
-        await expect(card.locator('h2')).toHaveText(/Rs\.\s?\d+/);
+      const card = productCards.nth(i);
+      await expect(card.locator('img')).toBeVisible();
+      await expect(card.locator('h2')).toHaveText(/Rs\.\s?\d+/);
         await expect(card.locator('p')).toBeVisible();
+        if(searchText) {
+          const paragraphText = await card.locator('p').textContent();
+          expect(paragraphText?.toLowerCase()).toContain(searchText.toLowerCase());
+        }
         console.log(`Product #${i + 1} verified successfully.`);
     }
   }
@@ -34,5 +44,7 @@ class ProductsPage extends BasePage {
     await expect(productInformation.locator(locators.category)).toBeVisible();
     await expect(productInformation.locator(locators.brand)).toBeVisible();
   }
+
 }
+
 export default ProductsPage;
