@@ -6,3 +6,8 @@ export const deleteAccount: string = 'Delete Account';
 export const logoutAccount: string = 'Logout';
 export const contactUsLink: string = 'Contact us';
 export const testCaseLink = 'Test Cases';
+
+export const subText: string = 'SUBSCRIPTION';
+export const subEmailInputField: string = '#susbscribe_email';
+export const subButtonID: string ='#subscribe';
+export const successfulSubMessage: string ='You have been successfully subscribed!';
