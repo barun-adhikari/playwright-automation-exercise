@@ -70,6 +70,15 @@ class HomePage extends BasePage {
     await this.isTextVisible(`Logged in as ${name}`)
   }
 
+  async subscribe() {
+      await this.isTextVisible(locators.subText);
+      await this.waitAndFill(locators.subEmailInputField, 'hahah@yopmail.com');
+      await Promise.all([
+          this.click(locators.subButtonID),
+      ]);
+      await this.isTextVisible(locators.successfulSubMessage);
+  }
+  
 }
 
 export default HomePage;

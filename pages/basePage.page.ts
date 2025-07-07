@@ -22,7 +22,8 @@ export class BasePage {
 
     async isTextVisible(text: string) {
         const regex = new RegExp(text, 'i');
-        await expect(this.page.getByText(regex)).toBeVisible();
+        const element = this.page.getByText(regex);
+        await expect(element, `Expected text "${text}" to be visible`).toBeVisible();
     }
 
     async click(selector: string) {
@@ -40,6 +41,7 @@ export class BasePage {
     async waitAndFill(locator: string,text: string) {
         await this.page.locator(locator).fill(text)
     }
+
 
     async selectRandomFromDropdown(locator: string) {
         await this.page.locator(locator).click();

@@ -105,6 +105,10 @@ test.describe("Test Case's",()=>{
       await productsPage.searchProduct(searchFor)
       await productsPage.verifyProductList(searchFor)
     })
-
   });
+  test("Test Case 10: Verify Subscription in home page", async({homePage}) => {
+    await homePage.step('Subscribing by email.', async()=>{
+      homePage.subscribe()
+    })
+  })
 })
