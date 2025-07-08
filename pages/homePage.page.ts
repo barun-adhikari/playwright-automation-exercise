@@ -29,7 +29,7 @@ class HomePage extends BasePage {
   }
 
   async goToCart() {
-    await this.clickByText(locators.cartPageLink);
+    await this.clickByRole('link', locators.cartPageLink, false);
     await this.isPageVisible();
   }
 
@@ -44,7 +44,6 @@ class HomePage extends BasePage {
   }
 
   async goToTestCase() {
-    await this.pause()
     await this.clickByRole('link',locators.testCaseLink, true);
     await this.isPageVisible()
     await this.checkUrl('test_case')

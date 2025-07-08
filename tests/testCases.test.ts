@@ -108,7 +108,13 @@ test.describe("Test Case's",()=>{
   });
   test("Test Case 10: Verify Subscription in home page", async({homePage}) => {
     await homePage.step('Subscribing by email.', async()=>{
-      homePage.subscribe()
+      await homePage.subscribe()
+    })
+  });
+  test("Test Case 11: Verify Subscription in Cart page", async({homePage}) => {
+    await homePage.step('Subscribing by email from cart page', async()=> {
+      await homePage.goToCart();
+      await homePage.subscribe(); // using the same code from home page in the cart
     })
   })
 })
