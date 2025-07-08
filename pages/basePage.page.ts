@@ -30,9 +30,14 @@ export class BasePage {
         await this.page.click(selector)
     }
     
-    async clickByRole(role: Parameters<Page['getByRole']>[0], name: string, strict: boolean) {
-        await this.page.getByRole(role, { name ,  exact: strict} ).click();
+    async clickByRole(
+    role: Parameters<Page['getByRole']>[0],
+    name: string | RegExp,
+    strict: boolean
+    ) {
+        await this.page.getByRole(role, { name, exact: strict }).click();
     }
+
 
     async clickByText(text: string) {
         await this.page.getByText(`${text}`).click()
