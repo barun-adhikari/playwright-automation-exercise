@@ -104,17 +104,25 @@ test.describe("Test Case's",()=>{
       const searchFor: string = "top"
       await productsPage.searchProduct(searchFor)
       await productsPage.verifyProductList(searchFor)
-    })
+    });
   });
   test("Test Case 10: Verify Subscription in home page", async({homePage}) => {
     await homePage.step('Subscribing by email.', async()=>{
       await homePage.subscribe()
-    })
+    });
   });
   test("Test Case 11: Verify Subscription in Cart page", async({homePage}) => {
     await homePage.step('Subscribing by email from cart page', async()=> {
       await homePage.goToCart();
       await homePage.subscribe(); // using the same code from home page in the cart
+    });
+  });
+  test("Test Case 12: Add Products in Cart", async({homePage, productsPage}) => {
+    await homePage.step('Navigation to the products page', async()=> {
+      await homePage.goToProducts();
+    });
+    await productsPage.step('Adding products to cart', async() => {
+      await productsPage.addToCart(2);
     })
   })
 })
