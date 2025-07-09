@@ -29,15 +29,18 @@ export class BasePage {
     async click(selector: string) {
         await this.page.click(selector)
     }
+
+    async hover(selector: string){
+        await this.page.hover(selector)
+    }
     
     async clickByRole(
-    role: Parameters<Page['getByRole']>[0],
-    name: string | RegExp,
-    strict: boolean
+        role: Parameters<Page['getByRole']>[0],
+        name: string | RegExp,
+        strict: boolean
     ) {
         await this.page.getByRole(role, { name, exact: strict }).click();
     }
-
 
     async clickByText(text: string) {
         await this.page.getByText(`${text}`).click()
