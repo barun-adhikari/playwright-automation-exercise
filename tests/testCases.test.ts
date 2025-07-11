@@ -93,7 +93,10 @@ test.describe("Test Case's",()=>{
       await productsPage.verifyProductList()
     })
     await productsPage.step("Checking the details for the 1st product", async()=> {
-      await productsPage.checkFirstProduct()
+      await productsPage.checkProduct(0);          // Here we are selecting the 1st product that is placed on the 0 index.
+    })
+      await productsPage.step("Checking product details", async()=> {
+        await productsPage.checkProductDetails(1)
     })
   });
   test("Test Case 9: Search Product", async({homePage, productsPage}) => {
