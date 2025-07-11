@@ -1,4 +1,6 @@
 import {Page, expect, Locator} from '@playwright/test';
+import * as fs from 'fs';
+import path from 'path';
 
 export class BasePage {
     page : Page;
@@ -98,6 +100,21 @@ export class BasePage {
     async step(description: string, action: () => Promise<void>): Promise<void> {
         console.log(`Test's Step:- ${description}`)
         await action()
+    }
+
+    async saveToJson(data: any, filename: string, space: number =2) {
+        try{
+            const dir = path.dirname(filename);
+            if((!fs.existsSync(dir))){
+                fs.mkdirSync(dir, {recursive: true})
+            }
+
+            const jsonData = JSON.stringify(data, null, space)
+            fs.writeFileSync(filename, jsonData, {encoding: 'utf-8'});
+            console.log(`Data successfully saved on: ${filename}`)
+        } catch(e) {
+            console.log(`Error while saving the data: ${e}`)
+        }
     }
 
 } 
