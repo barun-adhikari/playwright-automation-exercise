@@ -120,12 +120,18 @@ test.describe("Test Case's",()=>{
       await homePage.subscribe(); // using the same code from home page in the cart
     });
   });
-  test("Test Case 12: Add Products in Cart", async({homePage, productsPage}) => {
+  test("Test Case 12: Add Products in Cart", async({homePage, productsPage, cartPage}) => {
     await homePage.step('Navigation to the products page', async()=> {
       await homePage.goToProducts();
     });
     await productsPage.step('Adding products to cart', async() => {
       await productsPage.addToCart(2);
+    });
+    await homePage.step('Navigation to cart.', async()=> {
+      await homePage.goToCart();
+    });
+    await cartPage.step('Check the added products.', async()=> {
+      await cartPage.checkAddedCart()
     })
-  })
+  });
 })
