@@ -48,7 +48,7 @@ class ProductsPage extends BasePage {
 
   async addToCart(number: number) {
     const count = await this.productCards.count();
-    const addedProducts: { name: string; price: string }[] = [];
+    const addedProducts: { name: string; price: string, quantity: number }[] = [];
     for (let i = 0; i < number; i++) {
         const card = this.productCards.nth(i);
         const innerText = await card.innerText()
@@ -58,9 +58,10 @@ class ProductsPage extends BasePage {
           .filter(line => line.length > 0); 
         const price = flatText[0];
         const name = flatText[1];
+        const quantity = 1;
 
         if(price && name) {
-          addedProducts.push({name, price})
+          addedProducts.push({name, price, quantity})
         } else {
           console.warn(`Unexpected product card structure at index ${i}:`, flatText);
         }
