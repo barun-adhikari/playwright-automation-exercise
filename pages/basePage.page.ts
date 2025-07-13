@@ -117,6 +117,15 @@ export class BasePage {
         }
     }
 
+    async getJsonData<T = any>(filePath: string): Promise<T> {
+        try {
+            const data = await fs.promises.readFile(filePath, { encoding: 'utf-8' });
+            return JSON.parse(data);
+        } catch (error) {
+            console.error(`Failed to read or parse JSON from ${filePath}:`, error);
+            throw error;
+        }
+    }
 } 
 
 export default BasePage;
