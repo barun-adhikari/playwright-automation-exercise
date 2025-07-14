@@ -95,8 +95,8 @@ test.describe("Test Case's",()=>{
     await productsPage.step("Checking the details for the 1st product", async()=> {
       await productsPage.checkProduct(0);          // Here we are selecting the 1st product that is placed on the 0 index.
     })
-      await productsPage.step("Checking product details", async()=> {
-        await productsPage.checkProductDetails(1)
+    await productsPage.step("Checking product details", async()=> {
+      await productsPage.checkProductDetails(1)
     })
   });
   test("Test Case 9: Search Product", async({homePage, productsPage}) => {
@@ -134,4 +134,18 @@ test.describe("Test Case's",()=>{
       await cartPage.checkAddedCart()
     })
   });
+  test("Test Case 13: Verify Product quantity in Cart", async({homePage, productsPage, cartPage}) => {
+    await homePage.step('Navigation to the products page', async()=> {
+        await homePage.goToProducts();
+    });
+    await productsPage.step("Checking the details for the 1st product", async()=> {
+      await productsPage.checkProduct(0);
+    })
+    await productsPage.step("Checking product details", async()=> {
+      await productsPage.checkProductDetails(1, 4)
+    });
+    await cartPage.step('Check the added products.', async()=> {
+      await cartPage.checkAddedCart()
+    })
+  })
 })

@@ -9,7 +9,6 @@ class CartPage extends BasePage {
   }
   async checkAddedCart() {
     const products = await this.getJsonData<{ name: string; price: string; quantity: number }[]>('./downloads/productsDetails.json');
-    await this.pause();
     await this.page.waitForSelector(locators.cardDetailsRow);
 
     const productRows = this.page.locator(locators.cardDetailsRow);
