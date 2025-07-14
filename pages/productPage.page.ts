@@ -36,7 +36,7 @@ class ProductsPage extends BasePage {
     const viewProductButton = productIndex.locator(locators.clickViewReport)
     await viewProductButton.click()
   }
-  async checkProductDetails(index:number) {
+  async checkProductDetails(index:number, quantity?: number) {
     await this.checkUrl(`product_details/${index}`);
     const productInformation = this.page.locator(locators.productInformation);
     await expect(productInformation.locator('h2')).toBeVisible();
@@ -44,6 +44,19 @@ class ProductsPage extends BasePage {
     await expect(productInformation.locator(locators.availability)).toBeVisible();
     await expect(productInformation.locator(locators.category)).toBeVisible();
     await expect(productInformation.locator(locators.brand)).toBeVisible();
+    if(quantity) {
+      const name = await productInformation.locator('h2').textContent();
+      const price = await productInformation.locator('span span').first().textContent();
+      const product = {
+        name: name?.trim(),
+        price: price?.trim(),
+        quantity: quantity
+      };
+      await this.saveToJson(product, './downloads/productsDetails.json')
+      await this.waitAndFill('#quantity', `${quantity}`)
+      await this.clickByText('Add to cart');
+      await this.clickByText('View Cart')
+    }
   }
 
   async addToCart(number: number) {
