@@ -60,7 +60,6 @@ class ProductsPage extends BasePage {
   }
 
   async addToCart(number: number) {
-    const count = await this.productCards.count();
     const addedProducts: { name: string; price: string, quantity: number }[] = [];
     for (let i = 0; i < number; i++) {
         const card = this.productCards.nth(i);
@@ -71,7 +70,7 @@ class ProductsPage extends BasePage {
           .filter(line => line.length > 0); 
         const price = flatText[0];
         const name = flatText[1];
-        const quantity = 1;
+        const quantity = 1;           // here the quantity is static : 1 as only add quantity once
 
         if(price && name) {
           addedProducts.push({name, price, quantity})

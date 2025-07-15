@@ -10,6 +10,8 @@ class HomePage extends BasePage {
 
   async goto() {
     await this.page.goto('https://www.automationexercise.com/');
+    await this.isPageVisible()
+
   }
 
   async expectTitle() {
@@ -65,7 +67,7 @@ class HomePage extends BasePage {
     await this.isPageVisible();
   }
 
-  async isUserNameVisible() {
+  async isUserNameVisible(name: string) {
     await this.isTextVisible(`Logged in as ${name}`)
   }
 
