@@ -18,7 +18,7 @@ test.describe("Test Case's",()=>{
     });
 
     await homePage.step("Verify username is displayed on the homepage and initiate account deletion", async () => {
-      await homePage.isUserNameVisible();
+      await homePage.isUserNameVisible("test User");
       await homePage.goToDeleteAccount();
     });
 
@@ -136,7 +136,7 @@ test.describe("Test Case's",()=>{
   });
   test("Test Case 13: Verify Product quantity in Cart", async({homePage, productsPage, cartPage}) => {
     await homePage.step('Navigation to the products page', async()=> {
-        await homePage.goToProducts();
+      await homePage.goToProducts();
     });
     await productsPage.step("Checking the details for the 1st product", async()=> {
       await productsPage.checkProduct(0);
@@ -146,6 +146,26 @@ test.describe("Test Case's",()=>{
     });
     await cartPage.step('Check the added products.', async()=> {
       await cartPage.checkAddedCart()
+    })
+  })
+  test("Test Case 14: Place Order: Register while Checkout", async({productsPage, homePage, cartPage, signuporloginPage})=> {
+    await productsPage.step('Adding products and Checking out the products', async()=> {
+      await productsPage.addToCart(2)
+      await homePage.goToCart();
+      await cartPage.checkAddedCart();
+      await cartPage.checkout();
+    });
+    await signuporloginPage.step("Enter name and email address, then verify account creation", async () => {
+      await signuporloginPage.signUp("testuser121312@xyz.com", "test User", "valid");
+      await signuporloginPage.fillSignUp();
+      await signuporloginPage.accountCreatedMessage();
+      await homePage.isUserNameVisible("test User");
+    });
+    await productsPage.step('Checking out the previous products.', async()=> {
+      await homePage.goToCart();
+      await cartPage.pause();
+      await cartPage.checkout();
+      await cartPage.waitAndClickButton('hehehe')
     })
   })
 })

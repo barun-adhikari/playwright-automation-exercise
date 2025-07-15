@@ -40,6 +40,14 @@ class CartPage extends BasePage {
     }
   }
 
+  async checkout() {
+    await this.clickByText('Proceed To Checkout')
+    await this.clickByRole('link',  'Register / Login', true)
+  }
+
+  async checkOutDetails() {
+    
+  }
 }
 
 export default CartPage
