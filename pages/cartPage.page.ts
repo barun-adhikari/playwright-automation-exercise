@@ -45,9 +45,6 @@ class CartPage extends BasePage {
     await this.clickByRole('link',  'Register / Login', true)
   }
 
-  async checkOutDetails() {
-    
-  }
 }
 
 export default CartPage

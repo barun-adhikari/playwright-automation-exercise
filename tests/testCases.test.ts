@@ -148,24 +148,48 @@ test.describe("Test Case's",()=>{
       await cartPage.checkAddedCart()
     })
   })
-  test("Test Case 14: Place Order: Register while Checkout", async({productsPage, homePage, cartPage, signuporloginPage})=> {
+  test("Test Case 14: Place Order: Register while Checkout", async({productsPage, homePage, cartPage, signuporloginPage, checkoutPage})=> {
     await productsPage.step('Adding products and Checking out the products', async()=> {
       await productsPage.addToCart(2)
       await homePage.goToCart();
       await cartPage.checkAddedCart();
       await cartPage.checkout();
     });
+    let addressInfo: any;   // this is a bad practice going make a type for the address info in future.
     await signuporloginPage.step("Enter name and email address, then verify account creation", async () => {
       await signuporloginPage.signUp("testuser121312@xyz.com", "test User", "valid");
-      await signuporloginPage.fillSignUp();
+      addressInfo = await signuporloginPage.fillSignUp(); // capture filled data      
       await signuporloginPage.accountCreatedMessage();
       await homePage.isUserNameVisible("test User");
     });
     await productsPage.step('Checking out the previous products.', async()=> {
       await homePage.goToCart();
-      await cartPage.pause();
       await cartPage.checkout();
-      await cartPage.waitAndClickButton('hehehe')
-    })
+    });
+    await checkoutPage.step("Verify delivery and billing address details & place order", async () => {
+      await checkoutPage.verifyAddressDetails(addressInfo);
+      await checkoutPage.descriptionAndPlaceOrder();
+    });
+    await checkoutPage.step("Enter payment details and confirm order", async () => {
+      await checkoutPage.enterPaymentDetailsAndSubmit({
+        name: "Test User",
+        cardNumber: "4111111111111111",
+        cvc: "123",
+        expiryMonth: "07",
+        expiryYear: "2027"
+      });
+    });
+
+    await checkoutPage.step("Verify order success message", async () => {
+      await checkoutPage.verifyOrderSuccessMessage();
+    });
+
+    await homePage.step("Initiate account deletion", async () => {
+      await homePage.goToDeleteAccount();
+    });
+
+    await signuporloginPage.step("Confirm account deletion", async () => {
+      await signuporloginPage.accountDeleteMessage();
+    });
   })
 })
