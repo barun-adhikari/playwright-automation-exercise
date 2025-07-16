@@ -6,7 +6,7 @@ export default defineConfig({
   
   reporter: "html",
   use: {
-    headless: false,
+    headless: true,
     viewport: {width: 1920, height: 1080},
     trace: 'on',
     screenshot: 'only-on-failure',

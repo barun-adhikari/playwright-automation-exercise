@@ -28,26 +28,55 @@ class SignupORLoginPage extends BasePage {
     }
     async fillSignUp() {
         await this.isTextVisible(locators.detailsFormHeader);
-        const randomTitle = locators.title[Math.floor(Math.random() * locators.title.length)];
-        await this.clickByText(randomTitle);
-        await this.waitAndFill(locators.passwordInputField, locators.password);
-        await this.selectRandomFromDropdown(locators.dayDropdown);
-        await this.selectRandomFromDropdown(locators.monthDropdown);
-        await this.selectRandomFromDropdown(locators.yearDropdown);
+
+        const title = locators.title[Math.floor(Math.random() * locators.title.length)];
+        await this.clickByText(title);
+
+        const password = locators.password;
+        await this.waitAndFill(locators.passwordInputField, password);
+
+        const day = await this.selectRandomFromDropdown(locators.dayDropdown);
+        const month = await this.selectRandomFromDropdown(locators.monthDropdown);
+        const year = await this.selectRandomFromDropdown(locators.yearDropdown);
+
         await this.click(locators.newsletterCheckbox);
         await this.click(locators.specialOfferCheckbox);
-        await this.waitAndFill(locators.firstNameInputField, "test");
-        await this.waitAndFill(locators.lastNameInputField, "user");
-        await this.waitAndFill(locators.companyInputField, "none")
-        await this.waitAndFill(locators.address1InputField, "nepal");
-        await this.waitAndFill(locators.address2InputField, "KTM");
-        await this.selectRandomFromDropdown(locators.conuntryDropdown);
-        await this.waitAndFill(locators.stateInputField, "bagmati");
-        await this.waitAndFill(locators.cityInputField, "kathmandu");
-        await this.waitAndFill(locators.zipcodeInputField, '1101');
-        await this.waitAndFill(locators.mobileNumberInputField, '0000000000');
-        await this.waitAndClickButton(locators.createAccountButton)
+
+        const firstName = "test";
+        const lastName = "user";
+        const company = "none";
+        const address1 = "nepal";
+        const address2 = "KTM";
+        const state = "bagmati";
+        const city = "kathmandu";
+        const zipcode = "1101";
+        const mobile = "0000000000";
+        const country = await this.selectRandomFromDropdown(locators.conuntryDropdown); // Capture selected value
+
+        await this.waitAndFill(locators.firstNameInputField, firstName);
+        await this.waitAndFill(locators.lastNameInputField, lastName);
+        await this.waitAndFill(locators.companyInputField, company);
+        await this.waitAndFill(locators.address1InputField, address1);
+        await this.waitAndFill(locators.address2InputField, address2);
+        await this.waitAndFill(locators.stateInputField, state);
+        await this.waitAndFill(locators.cityInputField, city);
+        await this.waitAndFill(locators.zipcodeInputField, zipcode);
+        await this.waitAndFill(locators.mobileNumberInputField, mobile);
+        await this.waitAndClickButton(locators.createAccountButton);
+
+        return {
+            fullName: `${title} ${firstName} ${lastName}`,
+            company,
+            address1,
+            address2,
+            state,
+            city,
+            zipcode,
+            country,
+            mobile
+        };
     }
+
     async accountCreatedMessage() {
         await this.isTextVisible(locators.successfulAccountCreatedMessage);
         await this.click(locators.continueButton);
