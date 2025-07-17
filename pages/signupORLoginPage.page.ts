@@ -83,7 +83,6 @@ class SignupORLoginPage extends BasePage {
     }
     async accountDeleteMessage() {
         await this.isTextVisible(locators.successfulAccountDeletedMessage);
-        await this.pause()
         await this.click(locators.continueButton)
     }
 }
