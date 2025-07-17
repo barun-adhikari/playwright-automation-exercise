@@ -16,25 +16,29 @@ class CheckoutPage extends BasePage {
     zipcode: string;
     country: string;
     phone: string;
-    }) {
+  }) {
     const delivery = this.page.locator('#address_delivery');
     const billing = this.page.locator('#address_invoice');
 
     const expectedLines = [
-        addressInfo.fullName,
-        addressInfo.company,
-        addressInfo.address1,
-        addressInfo.address2,
-        `${addressInfo.city} ${addressInfo.state} ${addressInfo.zipcode}`,
-        addressInfo.country,
-        addressInfo.phone
+      addressInfo.fullName,
+      addressInfo.company,
+      addressInfo.address1,
+      addressInfo.address2,
+      `${addressInfo.city} ${addressInfo.state} ${addressInfo.zipcode}`,
+      addressInfo.country,
+      addressInfo.phone
     ];
 
-        for (const section of [delivery, billing]) {
-            for (const line of expectedLines) {
-            await expect(section).toContainText(line);
-            }
+    for (const section of [delivery, billing]) {
+      for (const line of expectedLines) {
+        if (line) {
+          await expect(section).toContainText(line);
+        } else {
+          throw new Error(`Expected address line is missing or undefined: ${line}`);
         }
+      }
+    }
   }
 
   async descriptionAndPlaceOrder() {
@@ -57,9 +61,8 @@ class CheckoutPage extends BasePage {
     await this.page.locator('[data-qa="pay-button"]').click();
   }
   async verifyOrderSuccessMessage() {
-    const successAlert = this.page.locator('#success_message .alert-success');
-    await expect(successAlert).toBeVisible();
-    await expect(successAlert).toHaveText("Your order has been placed successfully!");
+    await this.isTextVisible("Congratulations! Your order has been confirmed!");
+    await this.clickByText('Continue');
   } 
 
 }

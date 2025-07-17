@@ -40,9 +40,12 @@ class CartPage extends BasePage {
     }
   }
 
-  async checkout() {
-    await this.clickByText('Proceed To Checkout')
-    await this.clickByRole('link',  'Register / Login', true)
+  async checkout(options?: { afterLogin?: boolean }) {
+    await this.clickByText('Proceed To Checkout');
+    const isAfterLogin = options?.afterLogin ?? false;
+    if (!isAfterLogin) {
+      await this.clickByRole('link', 'Register / Login', true);
+    }
   }
 
 }
