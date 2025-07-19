@@ -193,50 +193,90 @@ test.describe("Test Case's",()=>{
     });
   })
   test("Test Case 15: Place Order: Register before Checkout", async ({ productsPage, homePage, cartPage, signuporloginPage, checkoutPage }) => {
-  let addressInfo: any; // Still needs a proper type
+    let addressInfo: any; // Still needs a proper type
 
-  await homePage.step("Navigate to Signup/Login and Register User", async () => {
-    await homePage.goToSignORLogin();
-    await signuporloginPage.signUp("testuser151515@xyz.com", "test User", "valid");
-    addressInfo = await signuporloginPage.fillSignUp(); // Capture filled data
-    await signuporloginPage.accountCreatedMessage();
-    await homePage.isUserNameVisible("test User");
-  });
+    await homePage.step("Navigate to Signup/Login and Register User", async () => {
+      await homePage.goToSignORLogin();
+      await signuporloginPage.signUp("testuser151515@xyz.com", "test User", "valid");
+      addressInfo = await signuporloginPage.fillSignUp(); // Capture filled data
+      await signuporloginPage.accountCreatedMessage();
+      await homePage.isUserNameVisible("test User");
+    });
 
-  await productsPage.step("Add products to cart", async () => {
-    await productsPage.addToCart(2);
-    await homePage.goToCart();
-    await cartPage.checkAddedCart();
-    await cartPage.checkout({ afterLogin: true }); // Already logged in at this point
-  });
+    await productsPage.step("Add products to cart", async () => {
+      await productsPage.addToCart(2);
+      await homePage.goToCart();
+      await cartPage.checkAddedCart();
+      await cartPage.checkout({ afterLogin: true }); // Already logged in at this point
+    });
 
-  await checkoutPage.step("Verify delivery and billing address details & place order", async () => {
-    // Optionally: await checkoutPage.verifyAddressDetails(addressInfo);
-    await checkoutPage.descriptionAndPlaceOrder();
-  });
+    await checkoutPage.step("Verify delivery and billing address details & place order", async () => {
+      // Optionally: await checkoutPage.verifyAddressDetails(addressInfo);
+      await checkoutPage.descriptionAndPlaceOrder();
+    });
 
-  await checkoutPage.step("Enter payment details and confirm order", async () => {
-    await checkoutPage.enterPaymentDetailsAndSubmit({
-      name: "Test User",
-      cardNumber: "4111111111111111",
-      cvc: "123",
-      expiryMonth: "07",
-      expiryYear: "2027"
+    await checkoutPage.step("Enter payment details and confirm order", async () => {
+      await checkoutPage.enterPaymentDetailsAndSubmit({
+        name: "Test User",
+        cardNumber: "4111111111111111",
+        cvc: "123",
+        expiryMonth: "07",
+        expiryYear: "2027"
+      });
+    });
+
+    await checkoutPage.step("Verify order success message", async () => {
+      await checkoutPage.verifyOrderSuccessMessage();
+    });
+
+    await homePage.step("Initiate account deletion", async () => {
+      await homePage.goToDeleteAccount();
+    });
+
+    await signuporloginPage.step("Confirm account deletion", async () => {
+      await signuporloginPage.accountDeleteMessage();
     });
   });
+  test("Test Case 16: Place Order: Login before Checkout", async ({ productsPage, homePage, cartPage, signuporloginPage, checkoutPage }) => {
 
-  await checkoutPage.step("Verify order success message", async () => {
-    await checkoutPage.verifyOrderSuccessMessage();
+    await homePage.step("Navigate to Signup/Login and Login User", async () => {
+      await homePage.goToSignORLogin();
+      await signuporloginPage.logIn("validuser123@xyz.com", "Admin@123", "Valid User");
+      await homePage.isUserNameVisible("Valid User");
+    });
+
+    await productsPage.step("Add products to cart", async () => {
+      await productsPage.addToCart(2);
+      await homePage.goToCart();
+      await cartPage.checkAddedCart();
+      await cartPage.checkout({ afterLogin: true }); // Already logged in at this point
+    });
+
+    await checkoutPage.step("Verify delivery and billing address details & place order", async () => {
+      // Optionally: await checkoutPage.verifyAddressDetails(addressInfo);
+      await checkoutPage.descriptionAndPlaceOrder();
+    });
+
+    await checkoutPage.step("Enter payment details and confirm order", async () => {
+      await checkoutPage.enterPaymentDetailsAndSubmit({
+        name: "Test User",
+        cardNumber: "4111111111111111",
+        cvc: "123",
+        expiryMonth: "07",
+        expiryYear: "2027"
+      });
+    });
+
+    await checkoutPage.step("Verify order success message", async () => {
+      await checkoutPage.verifyOrderSuccessMessage();
+    });
+
+    await homePage.step("Initiate account deletion", async () => {
+      await homePage.goToDeleteAccount();
+    });
+
+    await signuporloginPage.step("Confirm account deletion", async () => {
+      await signuporloginPage.accountDeleteMessage();
+    });
   });
-
-  await homePage.step("Initiate account deletion", async () => {
-    await homePage.goToDeleteAccount();
-  });
-
-  await signuporloginPage.step("Confirm account deletion", async () => {
-    await signuporloginPage.accountDeleteMessage();
-  });
-});
-
-  
 })
