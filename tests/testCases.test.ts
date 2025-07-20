@@ -279,4 +279,17 @@ test.describe("Test Case's",()=>{
       await signuporloginPage.accountDeleteMessage();
     });
   });
+
+  test('Test Case 17: Remove Products From Cart', async({ homePage, productsPage,cartPage}) => {
+    await homePage.step('Navigation to the cart page', async()=> {
+      await homePage.goToProducts();
+    });
+    await productsPage.step('Adding and removing the product', async() => {
+      await productsPage.addToCart(1);
+      await homePage.goToCart();
+    });
+    await cartPage.step('Remove the added product', async()=> {
+      await cartPage.removeProduct();
+    })
+  })
 })
