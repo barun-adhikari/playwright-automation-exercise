@@ -292,4 +292,18 @@ test.describe("Test Case's",()=>{
       await cartPage.removeProduct();
     })
   })
+  test('Test Case 18: View Category Products', async({ homePage, productsPage,cartPage}) => {
+    await homePage.step('Check all the sub-category link', async()=> {
+      await homePage.categoryList('Women', 'Tops');
+    });
+    await productsPage.step('Check the nav from the women category.', async()=> {
+      await productsPage.checkNavFromCategory('Women', 'Tops')
+    });
+    await homePage.step('Check all the sub-category link from products page', async()=> {   // as the function from the homepage does the same using the same code
+      await homePage.categoryList('Men', 'Tshirts');
+    });
+    await productsPage.step('Check the nav from the men category.', async()=> {
+      await productsPage.checkNavFromCategory('Men', 'Tshirts')
+    });
+  });
 })
