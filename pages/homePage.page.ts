@@ -80,6 +80,22 @@ class HomePage extends BasePage {
       await this.isTextVisible(locators.successfulSubMessage);
   }
   
-}
+async categoryList(category: string, subCategory: string) {
+  await this.isTextVisible('Category');
 
+  // Locate only the top-level category titles (Women, Men, Kids)
+  const categoryHeaders = this.page.locator('#accordian .panel-title a');
+
+  const actualCategories = await categoryHeaders.allTextContents();
+  const trimmedCategories = actualCategories.map(text => text.trim());
+  const expectedCategories = ['Women', 'Men', 'Kids'];
+
+  expect(trimmedCategories).toEqual(expectedCategories);
+  await this.page.locator(`a[href="#${category}"]`).click();
+  const panel = this.page.locator(`#${category}`);
+  await expect(panel).toBeVisible({ timeout: 5000 });
+  await panel.locator('a', { hasText: `${subCategory}` }).click();
+}
+}
+ 
 export default HomePage;

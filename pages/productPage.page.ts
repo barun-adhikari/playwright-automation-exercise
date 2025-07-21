@@ -89,7 +89,11 @@ class ProductsPage extends BasePage {
     }
     await this.saveToJson(addedProducts, './downloads/productsDetails.json')
   }
-
+  
+  async checkNavFromCategory(category: string, subCategory: string) {
+    await this.checkUrl('category_products')
+    await this.isTextVisible(`${category} - ${subCategory} Products`);
+  }
 }
 
 export default ProductsPage;
