@@ -94,6 +94,35 @@ class ProductsPage extends BasePage {
     await this.checkUrl('category_products')
     await this.isTextVisible(`${category} - ${subCategory} Products`);
   }
+
+async checkBrand() {
+  const brandsSection = this.page.locator('.brands_products');
+  await expect(brandsSection.locator('h2')).toHaveText('Brands');
+
+  const brandLinks = this.page.locator('.brands-name a');
+  // for all the Brands uncomment
+  // const count = await brandLinks.count();
+  const count =2
+
+  for (let i = 0; i < count; i++) {
+    const brandLink = brandLinks.nth(i);
+    const brandName = await brandLink.innerText();
+
+    const brandText = brandName.replace(/\(\d+\)/, '').trim();
+    await brandLink.click();
+
+    // Here we are using the custom checkURL instead of the checkURL function for the case-sensative products name.    
+    const formattedBrand = brandText.trim();
+    const expectedBrandUrl = new RegExp(`brand_products/${formattedBrand}`, 'i');
+    await expect(this.page).toHaveURL(expectedBrandUrl);
+
+    const productItems = this.page.locator('.product-image-wrapper');
+    await expect(productItems.first()).toBeVisible();
+
+    await this.page.goBack();
+  }
+}
+
 }
 
 export default ProductsPage;
