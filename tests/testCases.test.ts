@@ -292,7 +292,7 @@ test.describe("Test Case's",()=>{
       await cartPage.removeProduct();
     })
   })
-  test('Test Case 18: View Category Products', async({ homePage, productsPage,cartPage}) => {
+  test('Test Case 18: View Category Products', async({ homePage, productsPage}) => {
     await homePage.step('Check all the sub-category link', async()=> {
       await homePage.categoryList('Women', 'Tops');
     });
@@ -305,5 +305,13 @@ test.describe("Test Case's",()=>{
     await productsPage.step('Check the nav from the men category.', async()=> {
       await productsPage.checkNavFromCategory('Men', 'Tshirts')
     });
+  });
+  test('Test Case 19: View & Cart Brand Products', async({ homePage, productsPage}) => {
+    await homePage.step('Navigation to products page.', async()=> {
+      await homePage.goToProducts();
+    });
+    await productsPage.step('Check Brand navigation', async()=> {
+      await productsPage.checkBrand();
+    })
   });
 })
