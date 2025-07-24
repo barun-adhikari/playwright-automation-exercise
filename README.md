@@ -1,6 +1,6 @@
 #  Playwright Automation Exercise
 
-Automated end-to-end tests for the Automation Exercise website using Playwright and TypeScript.
+Automated end-to-end tests for the [Automation Exercise](https://www.automationexercise.com/) website using [Playwright](https://playwright.dev/) and [TypeScript](https://www.typescriptlang.org/).
 This project follows the Page Object Model (POM) to structure tests in a scalable and maintainable way.
 
 ```
@@ -33,10 +33,42 @@ playwright-automation-exercise/
 └── README.md
 ```
 
- ## Prerequisites
+## Prerequisites
+   Node.js (v16 or later)
+   
+   npm
+   
+   Git
+   
+   Playwright and its dependencies
+   
+ ## Installation
+Clone the repository and install dependencies:
+ ```
+ git clone https://github.com/barun-adhikari/playwright-automation-exercise.git
+ cd playwright-automation-exercise
+ ```
+ ## Install dependencies
+ ```
+ npm install
+ ```
+ ## Install Playwright browsers
+ ``` 
+ npx playwright install
+ ```
 
-    Node.js (v16 or later)
-    npm
-    Git
-    Bash (for init.sh script) (If you want to setpu the project files and the folders like this for new project)
-    Playwright and its dependencies
+## Running Tests From Terminal
+
+To execute all the tests (default headless mode):
+```
+npm test
+```
+To run tests with UI (headed mode):
+```
+npx playwright test --headed
+```
+To open the Playwright Test Report:
+```
+npx playwright show-report
+```
+
