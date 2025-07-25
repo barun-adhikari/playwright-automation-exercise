@@ -72,3 +72,21 @@ To open the Playwright Test Report:
 npx playwright show-report
 ```
 
+## Project Structure & Approach
+
+ - Follows the Page Object Model (POM) to separate test logic, locators, and test cases.
+
+ - pages/ contains interaction logic for each page.
+
+ - pageObjects/ contains all reusable selectors.
+
+ - tests/ holds the actual test scenarios.
+
+ - fixtures/ is used to define setup steps like navigation or authentication.
+
+ - utils/ holds utility functions (e.g., waits, retries).
+
+## Configuration
+
+- **playwright.config.ts**: Contains Playwright configuration settings.
+- **tsconfig.json**: TypeScript configuration file.
