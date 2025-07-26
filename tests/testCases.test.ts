@@ -314,4 +314,30 @@ test.describe("Test Case's",()=>{
       await productsPage.checkBrand();
     })
   });
+  test('Test Case 20: Search Products and Verify Cart After Login', async({homePage, productsPage, cartPage, signuporloginPage}) => {
+    await homePage.step('Navigation to the products page', async()=> {
+      await homePage.goToProducts();
+    })
+    await productsPage.step('Search and check the products', async()=> {
+      await productsPage.searchProduct('jeans');
+      await productsPage.verifyProductList('jeans');
+      await productsPage.addToCart(3);
+    })
+    await homePage.step('Navaigation to cart page', async()=> {
+      await homePage.goToCart();
+    })
+    await cartPage.step('Check the products on the cart page', async()=> {
+      await cartPage.checkAddedCart();
+      await cartPage.checkout();
+    })
+    await signuporloginPage.step('Logging in', async()=> {
+      await signuporloginPage.logIn('validuser123@xyz.com', 'Admin@123', 'Valid User')
+    })
+    await homePage.step('Navaigation back to cart page', async()=> {
+      await homePage.goToCart();
+    })
+    await cartPage.step('Check the products on the cart page is still visible', async()=> {
+      await cartPage.checkAddedCart();
+    })
+  })
 })
