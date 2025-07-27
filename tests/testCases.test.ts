@@ -340,4 +340,13 @@ test.describe("Test Case's",()=>{
       await cartPage.checkAddedCart();
     })
   })
+  test("Test Case 21: Add review on product", async({homePage, productsPage})=> {
+    await homePage.step("Navigate to the product page", async()=> {
+      await homePage.goToProducts();
+    });
+    await productsPage.step("Write and submit review", async()=> {
+      await productsPage.checkProduct(0);
+      await productsPage.submitReview();
+    })
+  })
 })
