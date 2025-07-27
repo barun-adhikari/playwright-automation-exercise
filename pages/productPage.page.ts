@@ -95,34 +95,42 @@ class ProductsPage extends BasePage {
     await this.isTextVisible(`${category} - ${subCategory} Products`);
   }
 
-async checkBrand() {
-  const brandsSection = this.page.locator('.brands_products');
-  await expect(brandsSection.locator('h2')).toHaveText('Brands');
+  async checkBrand() {
+    const brandsSection = this.page.locator('.brands_products');
+    await expect(brandsSection.locator('h2')).toHaveText('Brands');
 
-  const brandLinks = this.page.locator('.brands-name a');
-  // for all the Brands uncomment
-  // const count = await brandLinks.count();
-  const count =2
+    const brandLinks = this.page.locator('.brands-name a');
+    // for all the Brands uncomment
+    // const count = await brandLinks.count();
+    const count =2
 
-  for (let i = 0; i < count; i++) {
-    const brandLink = brandLinks.nth(i);
-    const brandName = await brandLink.innerText();
+    for (let i = 0; i < count; i++) {
+      const brandLink = brandLinks.nth(i);
+      const brandName = await brandLink.innerText();
 
-    const brandText = brandName.replace(/\(\d+\)/, '').trim();
-    await brandLink.click();
+      const brandText = brandName.replace(/\(\d+\)/, '').trim();
+      await brandLink.click();
 
-    // Here we are using the custom checkURL instead of the checkURL function for the case-sensative products name.    
-    const formattedBrand = brandText.trim();
-    const expectedBrandUrl = new RegExp(`brand_products/${formattedBrand}`, 'i');
-    await expect(this.page).toHaveURL(expectedBrandUrl);
+      // Here we are using the custom checkURL instead of the checkURL function for the case-sensative products name.    
+      const formattedBrand = brandText.trim();
+      const expectedBrandUrl = new RegExp(`brand_products/${formattedBrand}`, 'i');
+      await expect(this.page).toHaveURL(expectedBrandUrl);
 
-    const productItems = this.page.locator('.product-image-wrapper');
-    await expect(productItems.first()).toBeVisible();
+      const productItems = this.page.locator('.product-image-wrapper');
+      await expect(productItems.first()).toBeVisible();
 
-    await this.page.goBack();
+      await this.page.goBack();
+    }
   }
-}
 
+  async submitReview() {
+    await this.isTextVisible('Write Your Review');
+    await this.waitAndFill('#name', "test user");
+    await this.waitAndFill('#email', "testuser@gmail.com");
+    await this.waitAndFill('#review', "this is an automation generated reviw");
+    await this.waitAndClickButton('Submit');
+    await this.isTextVisible("Thank you for your review.");
+  }
 }
 
 export default ProductsPage;
