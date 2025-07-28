@@ -349,4 +349,9 @@ test.describe("Test Case's",()=>{
       await productsPage.submitReview();
     })
   })
+  test('Test Case 22: Add to cart from Recommended items', async({homePage})=> {
+    await homePage.step('Adding recommended item and checking cart', async()=> {
+      await homePage.addRecommendedItemToCartAndVerify()
+    })
+  })
 })

@@ -80,22 +80,45 @@ class HomePage extends BasePage {
       await this.isTextVisible(locators.successfulSubMessage);
   }
   
-async categoryList(category: string, subCategory: string) {
-  await this.isTextVisible('Category');
+  async categoryList(category: string, subCategory: string) {
+    await this.isTextVisible('Category');
 
-  // Locate only the top-level category titles (Women, Men, Kids)
-  const categoryHeaders = this.page.locator('#accordian .panel-title a');
+    // Locate only the top-level category titles (Women, Men, Kids)
+    const categoryHeaders = this.page.locator('#accordian .panel-title a');
 
-  const actualCategories = await categoryHeaders.allTextContents();
-  const trimmedCategories = actualCategories.map(text => text.trim());
-  const expectedCategories = ['Women', 'Men', 'Kids'];
+    const actualCategories = await categoryHeaders.allTextContents();
+    const trimmedCategories = actualCategories.map(text => text.trim());
+    const expectedCategories = ['Women', 'Men', 'Kids'];
 
-  expect(trimmedCategories).toEqual(expectedCategories);
-  await this.page.locator(`a[href="#${category}"]`).click();
-  const panel = this.page.locator(`#${category}`);
-  await expect(panel).toBeVisible({ timeout: 5000 });
-  await panel.locator('a', { hasText: `${subCategory}` }).click();
-}
+    expect(trimmedCategories).toEqual(expectedCategories);
+    await this.page.locator(`a[href="#${category}"]`).click();
+    const panel = this.page.locator(`#${category}`);
+    await expect(panel).toBeVisible({ timeout: 5000 });
+    await panel.locator('a', { hasText: `${subCategory}` }).click();
+  }
+
+  async addRecommendedItemToCartAndVerify() {
+    const featureItemContainer = this.page.locator('.recommended_items');
+    await featureItemContainer.scrollIntoViewIfNeeded();
+    await expect(featureItemContainer).toContainText(/recommended items/i);
+
+    const firstCard = featureItemContainer.locator('.single-products').first();
+    await firstCard.hover();
+    const addToCartButton = firstCard.locator('text=Add to cart');
+    await expect(addToCartButton).toBeVisible();
+    await addToCartButton.click();
+
+    const modal = this.page.locator('.modal-content');
+    await expect(modal).toBeVisible();
+    const viewCartBtn = modal.locator('text=View Cart');
+    await viewCartBtn.click();
+
+    const cartItem = this.page.locator('.cart_info .cart_description');
+    await expect(cartItem).toBeVisible();
+    const productName = await cartItem.locator('h4 a').innerText();
+    console.log(`Verified product in cart: ${productName}`);
+  }
+
 }
  
 export default HomePage;
